@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,7 +19,9 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name = "phones")
+@Table(name = "phones", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"number", "cityCode", "contrycode", "user_id"}, name = "user_unique_phone")
+})
 @Getter
 @Setter
 @ToString
