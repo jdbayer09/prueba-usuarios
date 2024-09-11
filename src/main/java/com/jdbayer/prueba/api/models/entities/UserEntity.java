@@ -1,10 +1,18 @@
 package com.jdbayer.prueba.api.models.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.UUID;
@@ -17,6 +25,9 @@ import java.util.UUID;
 @Setter
 @ToString
 public class UserEntity implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 6979800523222990760L;
 
     @Id
     @Column(name = "id", nullable = false, updatable = false)
