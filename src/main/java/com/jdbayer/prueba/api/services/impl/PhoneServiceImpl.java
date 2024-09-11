@@ -45,16 +45,9 @@ public class PhoneServiceImpl implements PhoneService {
     @Override
     @Transactional
     public List<PhoneDTO> saveAll(List<PhoneDTO> phones, UserDTO user) {
+        phoneRepository.deleteByUser_Id(user.getId());
         var listPhones = phones.stream()
-                .map(phone -> {
-                    var id = phone.getId();
-                    if (id == null) {
-                        return configurePhoneEntity(phone, new PhoneEntity(), user);
-                    } else {
-                        return configurePhoneEntity(phone, phoneRepository.findById(
-                                phone.getId()).orElseThrow(() -> new NotExistPhoneException(ERROR_NOT_FOUND_PHONE)), user);
-                    }
-                })
+                .map(phone -> configurePhoneEntity(phone, new PhoneEntity(), user))
                 .toList();
         return StreamSupport
                 .stream(phoneRepository.saveAll(listPhones).spliterator(), false)
