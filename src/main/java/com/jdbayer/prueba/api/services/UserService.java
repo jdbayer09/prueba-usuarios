@@ -1,0 +1,19 @@
+package com.jdbayer.prueba.api.services;
+
+import com.jdbayer.prueba.api.models.dto.UserDTO;
+
+import java.util.List;
+import java.util.UUID;
+
+public interface UserService {
+
+    UserDTO createUser(UserDTO user);
+    UserDTO updateUser(UserDTO user);
+    void validateSessionUser(UserDTO user);
+    UserDTO findUserByEmail(String email);
+    void disableUser(UUID id);
+    void enableUser(UUID id);
+    UserDTO findUserById(UUID id);
+    List<UserDTO> findAllUsers();
+
+}

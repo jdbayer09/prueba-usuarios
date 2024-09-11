@@ -6,4 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.UUID;
 
 public interface PhoneRepository extends CrudRepository<PhoneEntity, UUID> {
+
+    void deleteByUser_Id(UUID userId);
 }
