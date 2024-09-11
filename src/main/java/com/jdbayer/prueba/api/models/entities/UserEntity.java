@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -63,5 +64,10 @@ public class UserEntity implements Serializable {
         this.setCreated(ZonedDateTime.now());
         this.setModified(ZonedDateTime.now());
         this.setLastLogin(ZonedDateTime.now());
+    }
+
+    @PreUpdate
+    private void preUpdate() {
+        this.setModified(ZonedDateTime.now());
     }
 }
