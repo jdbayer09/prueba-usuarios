@@ -71,9 +71,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public UserDTO findUserById(UUID id) {
         var user = userRepository.findById(id).orElseThrow(() -> new NotExistUserException(NOT_EXIST_USER_MESSAGE));
-        var userDto = userMapper.entityToDto(user);
-        userDto.setPass(user.getPassword());
-        return userDto;
+        return userMapper.entityToDto(user);
     }
 
     @Override
@@ -81,10 +79,6 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> findAllUsers() {
         var users = StreamSupport.stream(userRepository.findAll().spliterator(), false).toList();
         if (users.isEmpty()) return List.of();
-        return users.stream().map(user -> {
-            var userDto = userMapper.entityToDto(user);
-            userDto.setPass(user.getPassword());
-            return userDto;
-        }).toList();
+        return users.stream().map(userMapper::entityToDto).toList();
     }
 }
