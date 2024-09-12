@@ -1,6 +1,7 @@
 package com.jdbayer.prueba.config.security.jwt.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jdbayer.prueba.api.exceptions.ErrorTokenException;
 import com.jdbayer.prueba.api.models.dto.UserDetailDTO;
 import com.jdbayer.prueba.config.security.SimpleGrantedAuthorityMixin;
 import com.jdbayer.prueba.config.security.jwt.service.JWTService;
@@ -9,6 +10,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
@@ -37,15 +39,37 @@ public class JWTServiceImpl implements JWTService {
     public String getUserApp(String token) {
         return getClaimsToken(token, Claims::getSubject);
     }
+
     @Override
     public String createToken(Authentication auth) throws IOException {
+        return createTokenAction(auth);
+    }
+
+    @Override
+    public String createToken(UserDetailDTO userDetailDTO) throws IOException {
+        return createTokenAction(userDetailDTO);
+    }
+
+    private String createTokenAction(Object object) throws IOException{
+        String claims = "";
+        String email = "";
+        if (object instanceof Authentication auth) {
+            email = auth.getName();
+            claims = new ObjectMapper().writeValueAsString(auth.getAuthorities());
+        } else if (object instanceof UserDetailDTO auth) {
+            claims = new ObjectMapper().writeValueAsString(auth.getAuthorities());
+            email = auth.getEmail();
+        } else {
+            throw new ErrorTokenException("No se puede generar el token");
+        }
+
         Claims extraClaims = Jwts.claims();
-        extraClaims.put("authorities", new ObjectMapper().writeValueAsString(auth.getAuthorities()));
+        extraClaims.put("authorities", claims);
 
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
-                .setSubject(((UserDetailDTO) auth.getPrincipal()).getEmail())
+                .setSubject(email)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(getExpirationTokenMillis()))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS512)

@@ -1,12 +1,18 @@
 package com.jdbayer.prueba.api.services.impl;
 
+import com.jdbayer.prueba.api.exceptions.ErrorTokenException;
 import com.jdbayer.prueba.api.exceptions.NotExistUserException;
 import com.jdbayer.prueba.api.models.dto.UserDTO;
 import com.jdbayer.prueba.api.models.dto.UserDetailDTO;
+import com.jdbayer.prueba.api.models.entities.UserEntity;
 import com.jdbayer.prueba.api.models.mappers.UserMapper;
+import com.jdbayer.prueba.api.models.requests.UserRequest;
 import com.jdbayer.prueba.api.repositories.UserRepository;
+import com.jdbayer.prueba.api.services.PhoneService;
 import com.jdbayer.prueba.api.services.UserService;
+import com.jdbayer.prueba.config.security.jwt.service.JWTService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,14 +27,34 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final JWTService jwtService;
+    private final PhoneService phoneService;
 
     private static final String NOT_EXIST_USER_MESSAGE = "User not found";
 
 
     @Override
     @Transactional
-    public UserDTO createUser(UserDTO user) {
-        return null;
+    public UserDTO createUser(UserRequest user) {
+        var userEntity = new UserEntity();
+
+        userEntity.setName(user.getName());
+        userEntity.setEmail(user.getEmail().toLowerCase());
+        userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+        userEntity.setActive(true);
+
+        try {
+            var token = jwtService.createToken(userMapper.entityToDetailDTO(userEntity));
+            userEntity.setToken(token);
+        } catch (Exception e) {
+            throw new ErrorTokenException("Problemas al crear el token");
+        }
+
+        var userCreated = userMapper.entityToDto(userRepository.save(userEntity));
+        userCreated.setPhones(phoneService.saveAll(user.getPhones(), userCreated));
+
+        return userCreated;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.jdbayer.prueba.api.models.dto;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +13,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-@Builder
 public class UserDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = -7349383502416203288L;
