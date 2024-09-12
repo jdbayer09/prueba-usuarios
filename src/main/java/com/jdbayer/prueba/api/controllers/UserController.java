@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -60,5 +62,12 @@ public class UserController {
         public ResponseEntity<List<UserResponse>> listAllUsers() {
                 var resp = userService.findAllUsers().stream().map(userMapper::dtoToResponse).toList();
                 return ResponseEntity.status(HttpStatus.OK).body(resp);
+        }
+
+        @GetMapping("/{id}")
+        @ResponseStatus(HttpStatus.OK)
+        @Operation(summary = "Find By ID")
+        public ResponseEntity<UserResponse> findById(@PathVariable UUID id) {
+                return ResponseEntity.status(HttpStatus.OK).body(userMapper.dtoToResponse(userService.findUserById(id)));
         }
 }

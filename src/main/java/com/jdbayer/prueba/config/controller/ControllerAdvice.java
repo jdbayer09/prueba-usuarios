@@ -54,9 +54,27 @@ public class ControllerAdvice {
         return errorMessage.toString();
     }
 
-    @ExceptionHandler({ObjectNotFoundException.class, NotExistPhoneException.class, NotExistUserException.class, ErrorTokenException.class})
+    @ExceptionHandler(ObjectNotFoundException.class)
     @ResponseStatus(NOT_FOUND)
     public ResponseEntity<ErrorResponse> handlerObjectNotFoundException(final ObjectNotFoundException t) {
+        return buildErrorResponse(t, t.getMessage(), NOT_FOUND);
+    }
+
+    @ExceptionHandler(ErrorTokenException.class)
+    @ResponseStatus(NOT_FOUND)
+    public ResponseEntity<ErrorResponse> handlerErrorTokenException(final ErrorTokenException t) {
+        return buildErrorResponse(t, t.getMessage(), NOT_FOUND);
+    }
+
+    @ExceptionHandler(NotExistUserException.class)
+    @ResponseStatus(NOT_FOUND)
+    public ResponseEntity<ErrorResponse> handlerNotExistUserException(final NotExistUserException t) {
+        return buildErrorResponse(t, t.getMessage(), NOT_FOUND);
+    }
+
+    @ExceptionHandler(NotExistPhoneException.class)
+    @ResponseStatus(NOT_FOUND)
+    public ResponseEntity<ErrorResponse> handlerNotExistPhoneException(final NotExistPhoneException t) {
         return buildErrorResponse(t, t.getMessage(), NOT_FOUND);
     }
 
