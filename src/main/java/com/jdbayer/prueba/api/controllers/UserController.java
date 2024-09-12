@@ -1,6 +1,8 @@
 package com.jdbayer.prueba.api.controllers;
 
+import com.jdbayer.prueba.api.models.mappers.UserMapper;
 import com.jdbayer.prueba.api.models.requests.UserRequest;
+import com.jdbayer.prueba.api.models.responses.CreatedUserResponse;
 import com.jdbayer.prueba.api.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -37,11 +39,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
         private final UserService userService;
+        private final UserMapper userMapper;
 
         @PostMapping("/register")
         @ResponseStatus(HttpStatus.CREATED)
         @Operation(summary = "Register User")
-        public ResponseEntity<?> registerUser(@RequestBody @Valid UserRequest user) {
-                return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(user));
+        public ResponseEntity<CreatedUserResponse> registerUser(@RequestBody @Valid UserRequest user) {
+                var resp = userMapper.dtoToCreatedResponse(userService.createUser(user));
+                return ResponseEntity.status(HttpStatus.CREATED).body(resp);
         }
 }
