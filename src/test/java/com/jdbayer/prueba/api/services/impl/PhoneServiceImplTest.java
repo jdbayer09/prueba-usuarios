@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,7 +37,6 @@ class PhoneServiceImplTest {
 
     @Test
     void testSaveAll() {
-        // Datos de prueba
         UserDTO userDTO = new UserDTO();
         userDTO.setId(UUID.randomUUID());
 
@@ -57,20 +57,16 @@ class PhoneServiceImplTest {
         phoneDTO.setCityCode(1);
         phoneDTO.setCountryCode(57);
 
-        // Configuración de los mocks
         when(userMapper.dtoToEntity(userDTO)).thenReturn(new UserEntity());
         when(phoneRepository.saveAll(anyList())).thenReturn(List.of(phoneEntity));
         when(phoneMapper.entityToDto(phoneEntity)).thenReturn(phoneDTO);
 
-        // Ejecución del método a probar
         List<PhoneDTO> result = phoneService.saveAll(phoneRequests, userDTO);
 
-        // Verificación de resultados
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(123456789, result.get(0).getNumber());
 
-        // Verificación de interacciones con los mocks
         verify(phoneRepository).deleteByUser_Id(userDTO.getId());
         verify(phoneRepository).saveAll(anyList());
         verify(phoneMapper).entityToDto(phoneEntity);
