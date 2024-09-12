@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Objects;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.PRECONDITION_FAILED;
@@ -66,7 +67,7 @@ public class ControllerAdvice {
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    @ResponseStatus(PRECONDITION_FAILED)
+    @ResponseStatus(CONFLICT)
     public ResponseEntity<ErrorResponse> handlerDataIntegrityViolationException(final DataIntegrityViolationException t) {
         String message;
         try {
@@ -75,7 +76,7 @@ public class ControllerAdvice {
             message = "Unexpected error: " + t.getCause().getCause().getMessage();
         }
 
-        return buildErrorResponse(t, message, PRECONDITION_FAILED);
+        return buildErrorResponse(t, message, CONFLICT);
     }
 
     private String messageFkUnique(String error) {

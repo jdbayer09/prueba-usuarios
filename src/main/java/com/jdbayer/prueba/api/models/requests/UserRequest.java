@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,8 +41,9 @@ public class UserRequest implements Serializable {
     @Schema(description = "User's password")
     private String password;
 
-    @NotNull(message = "A minimum of one telephone is required")
+    //@NotNull(message = "A minimum of one telephone is required")
     @Schema(description = "List phones")
     @Valid
+    @NotEmpty(message = "A minimum of one telephone is required")
     private List<PhoneRequest> phones;
 }

@@ -4,6 +4,7 @@ import com.jdbayer.prueba.api.models.dto.UserDTO;
 import com.jdbayer.prueba.api.models.dto.UserDetailDTO;
 import com.jdbayer.prueba.api.models.entities.UserEntity;
 import com.jdbayer.prueba.api.models.responses.CreatedUserResponse;
+import com.jdbayer.prueba.api.models.responses.UserResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -13,4 +14,5 @@ public interface UserMapper {
     UserEntity dtoToEntity(UserDTO userDTO);
     UserDetailDTO entityToDetailDTO(UserEntity userEntity);
     CreatedUserResponse dtoToCreatedResponse(UserDTO userDTO);
+    UserResponse dtoToResponse(UserDTO userDTO);
 }
