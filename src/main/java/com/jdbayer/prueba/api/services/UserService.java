@@ -10,7 +10,7 @@ public interface UserService {
 
     UserDTO createUser(UserDTO user);
     UserDTO updateUser(UserDTO user);
-    void validateSessionUser(UserDTO user);
+    void validateSessionUser(UUID userId, String sessionToken);
     UserDetailDTO findUserByEmail(String email);
     void disableUser(UUID id);
     void enableUser(UUID id);

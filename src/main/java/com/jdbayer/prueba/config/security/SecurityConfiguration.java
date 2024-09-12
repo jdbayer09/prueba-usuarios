@@ -1,5 +1,6 @@
 package com.jdbayer.prueba.config.security;
 
+import com.jdbayer.prueba.api.services.UserService;
 import com.jdbayer.prueba.config.security.jwt.filter.JWTAuthenticationFilter;
 import com.jdbayer.prueba.config.security.jwt.filter.JWTAuthorizationFilter;
 import com.jdbayer.prueba.config.security.jwt.service.JWTService;
@@ -21,10 +22,12 @@ import java.util.Arrays;
 public class SecurityConfiguration {
     private final JWTService jwtService;
     private final AuthenticationConfiguration authConfig;
+    private final UserService userService;
 
-    public SecurityConfiguration(JWTService jwtService, AuthenticationConfiguration authConfig) {
+    public SecurityConfiguration(JWTService jwtService, AuthenticationConfiguration authConfig, UserService userService) {
         this.jwtService = jwtService;
         this.authConfig = authConfig;
+        this.userService = userService;
     }
 
     @Bean
@@ -59,7 +62,7 @@ public class SecurityConfiguration {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authConfig.getAuthenticationManager(), jwtService))
+                .addFilter(new JWTAuthenticationFilter(authConfig.getAuthenticationManager(), jwtService, userService))
                 .addFilter(new JWTAuthorizationFilter(authConfig.getAuthenticationManager(), jwtService))
                 .csrf().disable()
                 .sessionManagement()

@@ -5,6 +5,7 @@ import com.jdbayer.prueba.api.models.dto.UserDetailDTO;
 import com.jdbayer.prueba.api.models.requests.AuthenticationRequest;
 import com.jdbayer.prueba.api.models.responses.AuthenticationResponse;
 import com.jdbayer.prueba.api.models.responses.ErrorResponse;
+import com.jdbayer.prueba.api.services.UserService;
 import com.jdbayer.prueba.config.security.jwt.service.JWTService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,9 +27,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authManager;
     private final JWTService jwtService;
+    private final UserService userService;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTService jwtService) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTService jwtService, UserService userService) {
         this.authManager = authenticationManager;
+        this.userService = userService;
         setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/login", "POST"));
         this.jwtService = jwtService;
     }
@@ -81,6 +84,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
         Date expirationToken = new Date(jwtService.getExpirationTokenMillis());
         body.setExpirationToken(sdf.format(expirationToken));
+        new Thread(() -> userService.validateSessionUser(userData.getId(), token)).start();
         return body;
     }
 

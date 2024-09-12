@@ -72,9 +72,4 @@ public class UserEntity implements Serializable {
         this.setModified(ZonedDateTime.now());
         this.setLastLogin(ZonedDateTime.now());
     }
-
-    @PreUpdate
-    private void preUpdate() {
-        this.setModified(ZonedDateTime.now());
-    }
 }

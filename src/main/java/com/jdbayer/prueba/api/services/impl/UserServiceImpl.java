@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
@@ -38,8 +39,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void validateSessionUser(UserDTO user) {
-
+    public void validateSessionUser(UUID userId, String sessionToken) {
+        var user = userRepository.findById(userId).orElseThrow(() -> new NotExistUserException(NOT_EXIST_USER_MESSAGE));
+        user.setToken(sessionToken);
+        user.setLastLogin(ZonedDateTime.now());
+        userRepository.save(user);
     }
 
     @Override
