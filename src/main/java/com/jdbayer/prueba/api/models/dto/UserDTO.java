@@ -22,7 +22,7 @@ public class UserDTO implements Serializable {
     private UUID id;
     private String name;
     private String email;
-    private String password;
+    private String pass;
     private ZonedDateTime created;
     private ZonedDateTime modified;
     private ZonedDateTime lastLogin;
