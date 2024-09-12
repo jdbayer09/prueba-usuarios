@@ -11,17 +11,17 @@ import java.util.UUID;
 public record CreatedUserResponse(
         @Schema(description = "Unique identifier")
         UUID id,
-        @Schema(description = "Unique email")
-        String email,
-        @Schema(description = "Session Token")
-        String token,
         @Schema(description = "Names")
         String name,
+        @Schema(description = "Unique email")
+        String email,
+        @Schema(description = "List Phones")
+        List<PhoneResponse> phones,
         @Schema(description = "Created Date")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MMMM-yyyy hh:mm a")
         ZonedDateTime created,
-        @Schema(description = "List Phones")
-        List<PhoneResponse> phones
+        @Schema(description = "Session Token")
+        String token
 ) {
 
 
