@@ -77,6 +77,7 @@ public class UserServiceImpl implements UserService {
     public void disableUser(UUID id) {
         var user = userRepository.findById(id).orElseThrow(() -> new NotExistUserException(NOT_EXIST_USER_MESSAGE));
         user.setActive(false);
+        user.setModified(ZonedDateTime.now());
         userRepository.save(user);
     }
 
@@ -85,6 +86,7 @@ public class UserServiceImpl implements UserService {
     public void enableUser(UUID id) {
         var user = userRepository.findById(id).orElseThrow(() -> new NotExistUserException(NOT_EXIST_USER_MESSAGE));
         user.setActive(true);
+        user.setModified(ZonedDateTime.now());
         userRepository.save(user);
     }
 
