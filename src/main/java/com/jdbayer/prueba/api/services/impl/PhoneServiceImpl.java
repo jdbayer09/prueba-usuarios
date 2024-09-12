@@ -1,6 +1,5 @@
 package com.jdbayer.prueba.api.services.impl;
 
-import com.jdbayer.prueba.api.exceptions.NotExistPhoneException;
 import com.jdbayer.prueba.api.models.dto.PhoneDTO;
 import com.jdbayer.prueba.api.models.dto.UserDTO;
 import com.jdbayer.prueba.api.models.entities.PhoneEntity;
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -24,25 +22,6 @@ public class PhoneServiceImpl implements PhoneService {
     private final PhoneRepository phoneRepository;
     private final PhoneMapper phoneMapper;
     private final UserMapper userMapper;
-
-    private static final String ERROR_NOT_FOUND_PHONE = "Phone not found";
-
-    @Override
-    @Transactional
-    public PhoneDTO create(PhoneRequest phone, UserDTO user) {
-        var phoneEntity = configurePhoneEntity(phone, new PhoneEntity(), user);
-        return phoneMapper.entityToDto(phoneRepository.save(phoneEntity));
-    }
-
-    @Override
-    @Transactional
-    public PhoneDTO update(UUID phoneId, PhoneRequest phone, UserDTO user) {
-        var phoneEntity = configurePhoneEntity(
-                    phone,
-                    phoneRepository.findById(
-                            phoneId).orElseThrow(() -> new NotExistPhoneException(ERROR_NOT_FOUND_PHONE)), user);
-        return phoneMapper.entityToDto(phoneRepository.save(phoneEntity));
-    }
 
     @Override
     @Transactional
