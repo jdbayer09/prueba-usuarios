@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.ErrorResponse;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,5 +84,15 @@ public class UserController {
                 resp.put("message", "The user has been activated");
                 return ResponseEntity.status(HttpStatus.OK).body(resp);
         }
-        
+
+        @DeleteMapping("/disable/{id}")
+        @ResponseStatus(HttpStatus.OK)
+        @Operation(summary = "Enable User")
+        public ResponseEntity<Map<String, String>> disableUser(@PathVariable UUID id) {
+                userService.disableUser(id);
+                Map<String, String > resp = new HashMap<>();
+                resp.put("message", "The user has been deactivated");
+                return ResponseEntity.status(HttpStatus.OK).body(resp);
+        }
+
 }
