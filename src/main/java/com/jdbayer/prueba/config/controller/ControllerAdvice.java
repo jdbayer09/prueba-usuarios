@@ -1,5 +1,6 @@
 package com.jdbayer.prueba.config.controller;
 
+import com.jdbayer.prueba.api.exceptions.ErrorTokenException;
 import com.jdbayer.prueba.api.exceptions.NotExistPhoneException;
 import com.jdbayer.prueba.api.exceptions.NotExistUserException;
 import com.jdbayer.prueba.api.models.responses.ErrorResponse;
@@ -52,7 +53,7 @@ public class ControllerAdvice {
         return errorMessage.toString();
     }
 
-    @ExceptionHandler({ObjectNotFoundException.class, NotExistPhoneException.class, NotExistUserException.class})
+    @ExceptionHandler({ObjectNotFoundException.class, NotExistPhoneException.class, NotExistUserException.class, ErrorTokenException.class})
     @ResponseStatus(NOT_FOUND)
     public ResponseEntity<ErrorResponse> handlerObjectNotFoundException(final ObjectNotFoundException t) {
         return buildErrorResponse(t, t.getMessage(), NOT_FOUND);
@@ -69,7 +70,7 @@ public class ControllerAdvice {
     public ResponseEntity<ErrorResponse> handlerDataIntegrityViolationException(final DataIntegrityViolationException t) {
         String message;
         try {
-            message = messageFkUnique(t.getCause().getCause().getMessage());
+            message = messageFkUnique(t.getCause().getCause().getMessage().toLowerCase());
         } catch (Exception ex) {
             message = "Unexpected error: " + t.getCause().getCause().getMessage();
         }
