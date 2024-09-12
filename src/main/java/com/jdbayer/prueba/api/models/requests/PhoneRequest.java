@@ -3,7 +3,6 @@ package com.jdbayer.prueba.api.models.requests;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +13,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-@Builder
 @Schema(description = "Information required to create or update a phone")
 public class PhoneRequest implements Serializable {
     @Serial
