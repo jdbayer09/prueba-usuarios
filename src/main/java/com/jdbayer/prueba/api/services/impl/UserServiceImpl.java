@@ -2,6 +2,7 @@ package com.jdbayer.prueba.api.services.impl;
 
 import com.jdbayer.prueba.api.exceptions.NotExistUserException;
 import com.jdbayer.prueba.api.models.dto.UserDTO;
+import com.jdbayer.prueba.api.models.dto.UserDetailDTO;
 import com.jdbayer.prueba.api.models.mappers.UserMapper;
 import com.jdbayer.prueba.api.repositories.UserRepository;
 import com.jdbayer.prueba.api.services.UserService;
@@ -59,9 +60,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDTO findUserByEmail(String email) {
+    public UserDetailDTO findUserByEmail(String email) {
         var user = userRepository.findByEmail(email).orElseThrow(() -> new NotExistUserException(NOT_EXIST_USER_MESSAGE));
-        return userMapper.entityToDto(user);
+        var userDto = userMapper.entityToDetailDTO(user);
+        userDto.setPass(user.getPassword());
+        return userDto;
     }
 
     @Override
