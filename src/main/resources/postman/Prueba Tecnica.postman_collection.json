@@ -1,0 +1,275 @@
+{
+	"info": {
+		"_postman_id": "a53a94fb-cbcb-4ed7-8719-0546105db256",
+		"name": "Prueba Tecnica",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4638137",
+		"_collection_link": "https://endicontrol.postman.co/workspace/ITS~ce9d7288-1651-490e-a255-6a6fc9ebbfd9/collection/4638137-a53a94fb-cbcb-4ed7-8719-0546105db256?action=share&source=collection_link&creator=4638137"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var json = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"token\", `${json.token}`);\r",
+							"pm.collectionVariables.set(\"userId\", `${json.id}`);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"string\",\r\n  \"email\": \"stsring@gmasil.com\",\r\n  \"password\": \"stringS2.\",\r\n  \"phones\": [\r\n    {\r\n      \"number\": 1,\r\n      \"cityCode\": 1,\r\n      \"countryCode\": 1\r\n    },\r\n    {\r\n      \"number\": 1,\r\n      \"cityCode\": 1,\r\n      \"countryCode\": 12\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/users/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List All Users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var json = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"token\", `${json.token}`);\r",
+							"\r",
+							"pm.collectionVariables.set(\"userId\", `${json.id}`);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"stsring@gmasil.com\",\r\n    \"password\": \"stringS2.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find By Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/users/0f1d1e4c-1554-4ac0-a6c9-be254ff48bb2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"0f1d1e4c-1554-4ac0-a6c9-be254ff48bb2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enable User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/users/enable/0f1d1e4c-1554-4ac0-a6c9-be254ff48bb2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"enable",
+						"0f1d1e4c-1554-4ac0-a6c9-be254ff48bb2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Disable User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/users/disable/84ab8a2a-9188-4475-a124-28a6b2165489",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"disable",
+						"84ab8a2a-9188-4475-a124-28a6b2165489"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"string\",\r\n  \"email\": \"stsring@gmail.com2sss2ss\",\r\n  \"password\": \"string\",\r\n  \"phones\": [\r\n    {\r\n      \"number\": 13123,\r\n      \"cityCode\": 1,\r\n      \"countryCode\": 1\r\n    },\r\n        {\r\n      \"number\": 13123,\r\n      \"cityCode\": 1,\r\n      \"countryCode\": 14\r\n    },\r\n        {\r\n      \"number\": 13123,\r\n      \"cityCode\": 12,\r\n      \"countryCode\": 1\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/users/73d493c4-8243-4b15-bd0e-3f06db76e2fe",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"73d493c4-8243-4b15-bd0e-3f06db76e2fe"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "userId",
+			"value": ""
+		}
+	]
+}
