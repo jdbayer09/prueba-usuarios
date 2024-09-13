@@ -2,10 +2,9 @@ package com.jdbayer.prueba.api.models.requests;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,15 +29,15 @@ public class UserRequest implements Serializable {
     @Schema(description = "User names")
     private String name;
 
-    //TODO: Validar el pattern
     @NotBlank(message = "The email field cannot be empty")
-    @Email(message = "You must enter a valid email address")
+    //@Email(message = "You must enter a valid email address")
     @Schema(description = "User's email")
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$", message = "This email is not valid")
     private String email;
 
-    //TODO: Agregar validacion de pattern
     @NotBlank(message = "The password cannot be empty")
     @Schema(description = "User's password")
+    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.])(?=\\S+$).{8,}$", message = "The password must be at least 8 characters long, including an uppercase letter, a lowercase letter, a number and a special character.")
     private String password;
 
     //@NotNull(message = "A minimum of one telephone is required")
