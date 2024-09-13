@@ -95,7 +95,6 @@ class UserServiceImplTest {
 
     @Test
     void updateUser() {
-        UUID userId = UUID.randomUUID();
         when(userRepository.findById(userId)).thenReturn(Optional.of(userEntity));
         when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
         when(userMapper.entityToDto(any(UserEntity.class))).thenReturn(userDTO);
@@ -110,7 +109,6 @@ class UserServiceImplTest {
 
     @Test
     void validateSessionUser() {
-        UUID userId = UUID.randomUUID();
         when(userRepository.findById(userId)).thenReturn(Optional.of(userEntity));
         userService.validateSessionUser(userId, "newSessionToken");
         assertEquals("newSessionToken", userEntity.getToken());
