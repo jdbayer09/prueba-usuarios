@@ -142,7 +142,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/api/v1/users/0f1d1e4c-1554-4ac0-a6c9-be254ff48bb2",
+					"raw": "localhost:8080/api/v1/users/{{userId}}",
 					"host": [
 						"localhost"
 					],
@@ -151,7 +151,7 @@
 						"api",
 						"v1",
 						"users",
-						"0f1d1e4c-1554-4ac0-a6c9-be254ff48bb2"
+						"{{userId}}"
 					]
 				}
 			},
@@ -173,7 +173,7 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/api/v1/users/enable/0f1d1e4c-1554-4ac0-a6c9-be254ff48bb2",
+					"raw": "localhost:8080/api/v1/users/enable/{{userId}}",
 					"host": [
 						"localhost"
 					],
@@ -183,7 +183,7 @@
 						"v1",
 						"users",
 						"enable",
-						"0f1d1e4c-1554-4ac0-a6c9-be254ff48bb2"
+						"{{userId}}"
 					]
 				}
 			},
@@ -205,7 +205,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/api/v1/users/disable/84ab8a2a-9188-4475-a124-28a6b2165489",
+					"raw": "localhost:8080/api/v1/users/disable/{{userId}}",
 					"host": [
 						"localhost"
 					],
@@ -215,7 +215,7 @@
 						"v1",
 						"users",
 						"disable",
-						"84ab8a2a-9188-4475-a124-28a6b2165489"
+						"{{userId}}"
 					]
 				}
 			},
@@ -238,7 +238,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"string\",\r\n  \"email\": \"stsring@gmail.com2sss2ss\",\r\n  \"password\": \"string\",\r\n  \"phones\": [\r\n    {\r\n      \"number\": 13123,\r\n      \"cityCode\": 1,\r\n      \"countryCode\": 1\r\n    },\r\n        {\r\n      \"number\": 13123,\r\n      \"cityCode\": 1,\r\n      \"countryCode\": 14\r\n    },\r\n        {\r\n      \"number\": 13123,\r\n      \"cityCode\": 12,\r\n      \"countryCode\": 1\r\n    }\r\n  ]\r\n}",
+					"raw": "{\r\n  \"name\": \"string\",\r\n  \"email\": \"stsrin2g@gmasil.com\",\r\n  \"password\": \"stringS2s.\",\r\n  \"phones\": [\r\n    {\r\n      \"number\": 13123,\r\n      \"cityCode\": 1,\r\n      \"countryCode\": 1\r\n    },\r\n        {\r\n      \"number\": 13123,\r\n      \"cityCode\": 1,\r\n      \"countryCode\": 14\r\n    },\r\n        {\r\n      \"number\": 13123,\r\n      \"cityCode\": 12,\r\n      \"countryCode\": 1\r\n    }\r\n  ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -246,7 +246,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/v1/users/73d493c4-8243-4b15-bd0e-3f06db76e2fe",
+					"raw": "localhost:8080/api/v1/users/{{userId}}",
 					"host": [
 						"localhost"
 					],
@@ -255,7 +255,7 @@
 						"api",
 						"v1",
 						"users",
-						"73d493c4-8243-4b15-bd0e-3f06db76e2fe"
+						"{{userId}}"
 					]
 				}
 			},
