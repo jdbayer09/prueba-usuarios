@@ -95,4 +95,12 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.OK).body(resp);
         }
 
+        @PutMapping("/{id}")
+        @ResponseStatus(HttpStatus.OK)
+        @Operation(summary = "Update User")
+        public ResponseEntity<UserResponse> updateUser(@PathVariable UUID id, @RequestBody @Valid UserRequest user) {
+                var resp = userMapper.dtoToResponse(userService.updateUser(user, id));
+                return ResponseEntity.status(HttpStatus.CREATED).body(resp);
+        }
+
 }

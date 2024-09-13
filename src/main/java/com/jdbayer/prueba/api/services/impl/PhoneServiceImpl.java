@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -26,7 +27,6 @@ public class PhoneServiceImpl implements PhoneService {
     @Override
     @Transactional
     public List<PhoneDTO> saveAll(List<PhoneRequest> phones, UserDTO user) {
-        phoneRepository.deleteByUser_Id(user.getId());
         var listPhones = phones.stream()
                 .map(phone -> configurePhoneEntity(phone, new PhoneEntity(), user))
                 .toList();
@@ -34,6 +34,12 @@ public class PhoneServiceImpl implements PhoneService {
                 .stream(phoneRepository.saveAll(listPhones).spliterator(), false)
                 .map(phoneMapper::entityToDto)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public void deleteAllByUserId(UUID userId) {
+        phoneRepository.deleteByUser_Id(userId);
     }
 
     private PhoneEntity configurePhoneEntity(PhoneRequest phoneDTO, PhoneEntity phoneEntity, UserDTO user) {

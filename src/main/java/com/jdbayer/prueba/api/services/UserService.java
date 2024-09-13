@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface UserService {
 
     UserDTO createUser(UserRequest user);
-    UserDTO updateUser(UserDTO user);
+    UserDTO updateUser(UserRequest user, UUID id);
     void validateSessionUser(UUID userId, String sessionToken);
     UserDetailDTO findUserByEmail(String email);
     void disableUser(UUID id);

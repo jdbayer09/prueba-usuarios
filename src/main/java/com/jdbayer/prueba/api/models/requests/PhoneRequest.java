@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -17,6 +18,9 @@ import java.io.Serializable;
 public class PhoneRequest implements Serializable {
     @Serial
     private static final long serialVersionUID = 3229430761573639657L;
+
+    @Schema(description = "Phone City Code")
+    private UUID id;
 
     @NotNull(message = "The number field cannot be empty")
     @Min(value = 1, message = "Min value is 1")

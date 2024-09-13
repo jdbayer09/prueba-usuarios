@@ -53,14 +53,23 @@ public class UserServiceImpl implements UserService {
 
         var userCreated = userMapper.entityToDto(userRepository.save(userEntity));
         userCreated.setPhones(phoneService.saveAll(user.getPhones(), userCreated));
-
         return userCreated;
     }
 
     @Override
     @Transactional
-    public UserDTO updateUser(UserDTO user) {
-        return null;
+    public UserDTO updateUser(UserRequest user, UUID id) {
+        var userEntity = userRepository.findById(id).orElseThrow(() -> new NotExistUserException(NOT_EXIST_USER_MESSAGE));
+        if (!user.getPassword().equalsIgnoreCase(userEntity.getPassword())) {
+            userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        userEntity.setEmail(user.getEmail().toLowerCase());
+        userEntity.setName(user.getName());
+        userEntity.setModified(ZonedDateTime.now());
+        phoneService.deleteAllByUserId(id);
+        var resp = userMapper.entityToDto(userRepository.save(userEntity));
+        resp.setPhones(phoneService.saveAll(user.getPhones(), resp));
+        return resp;
     }
 
     @Override
