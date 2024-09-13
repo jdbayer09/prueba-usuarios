@@ -67,8 +67,14 @@ class PhoneServiceImplTest {
         assertEquals(1, result.size());
         assertEquals(123456789, result.get(0).getNumber());
 
-        verify(phoneRepository).deleteByUser_Id(userDTO.getId());
         verify(phoneRepository).saveAll(anyList());
         verify(phoneMapper).entityToDto(phoneEntity);
+    }
+
+    @Test
+    void testDeleteAllByUserId(){
+        UUID userId = UUID.randomUUID();
+        phoneService.deleteAllByUserId(userId);
+        verify(phoneRepository, times(1)).deleteByUser_Id(userId);
     }
 }

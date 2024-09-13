@@ -18,7 +18,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-@Builder
 public class UserDetailDTO implements Serializable, UserDetails {
 
     @Serial

@@ -17,7 +17,6 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@Builder
 @Schema(description = "Information required to create or update a user")
 public class UserRequest implements Serializable {
 
